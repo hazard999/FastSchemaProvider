@@ -9,7 +9,7 @@ Thank you Mark and Richard
 ##Optimizations
 New Queries + wider structure of schema
 ##Requirements
-NLog (for loggign (not used so far)) (via NuGet)  
+NLog (for logging (not used so far)) (via NuGet)  
 NUnit for testing (via NuGet)  
 ServiceStack.Text for serialization  
 iAnwhere.Data.SQLAnywhere.v4.0 for console application
