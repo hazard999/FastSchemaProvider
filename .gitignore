@@ -1,0 +1,4 @@
+/*.ncrunchsolution
+/FastSchemaProvider.Test\obj\Debug/*.cache
+/FastSchemaProvider\obj\Debug/*.cache
+*.cache

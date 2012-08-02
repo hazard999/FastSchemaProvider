@@ -1,19 +1,20 @@
-#Simple.Data.SqlAnywhere
-Simple.Data.SqlAnywhere is an ADO provider for the Simple.Data framework by Mark Rendle.
-http://github.com/markrendle/Simple.Data
+#FastSchemaProvider 
+FastSchemaProvider is an ADO based schema provider trying to get the schema as fast as possible
+http://github.com/hazard999/FastSchemaProvider.git
 
-##Supported Sql Anywhere version
-* SQL Anywhere 12.0.1 - all tests passing.
-* SQL Anywhere 11.0.1 - all tests passing.
-* SQL Anywhere 10.0.0 - all tests passing.
-* SQL Anywhere 9.0.2 - all tests passing.
-* SQL Anywhere 8.0.3 - all tests passing.
+Additional features
+Serialization thru ServiceStack.Text
+Schema upgrade from provided schema
 
 ##Genesis
-The initial code & test assemblies were taken from the SQL Server code & test assemblies and therefore it should be pretty easy to transfer skills from SQL Server to SQL Anywhere.
+The initial code was taken from Mark Rendle (https://github.com/markrendle)
+Thank you Mark
 
 ##Optimizations
-To maintain feature parity with Simple.Data.SqlServer a number of features are supported in sub-optimal ways such as paging on 8.0.3 & bulk inserts before 10.0.0.
+New Queries + wider structure of schema
 
 ##Requirements
-iAnywhere.Data.SQLAnywhere.v4.0.dll version 12.0.1 from the SQL Anywhere installation - http://www.sybase.com/products/databasemanagement/sqlanywhere
+NLog as NuGet
+NUnit for testing
+ServiceStack.Text for serialization
+iAnwhere.Data.SQLAnywhere.v4.0 for console application
