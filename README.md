@@ -7,8 +7,8 @@ Serialization thru ServiceStack.Text
 Schema upgrade from provided schema
 
 ##Genesis
-The initial code was taken from Mark Rendle (https://github.com/markrendle)
-Thank you Mark
+The initial code was taken from Mark Rendle (https://github.com/markrendle) and  Richard Hopton (https://github.com/richardhopton)
+Thank you Mark and Richard
 
 ##Optimizations
 New Queries + wider structure of schema
