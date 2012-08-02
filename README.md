@@ -1,5 +1,5 @@
 #FastSchemaProvider 
-FastSchemaProvider is an ADO based schema provider trying to get the schema as fast as possible
+FastSchemaProvider is an ADO based schema provider trying to get the schema as fast as possible  
 Additional features
 Serialization thru ServiceStack.Text  
 Schema upgrade from provided schema
