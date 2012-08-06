@@ -126,13 +126,13 @@ namespace FastSchemaProvider.Test
             FastSchemaProviderMock provider = new FastSchemaProviderMock(con);
             provider.ReadSchema();
             
-            new FastSchemaSerializer().WriteToDisk(provider, @"c:\testdata.txt");
+            new SchemaSerializer().WriteToDisk(provider, @"c:\testdata.txt");
         }
 
         [TestCase]
         public void FromDiskTest()
         {
-            var provider = new FastSchemaSerializer().ReadFromDisk(@"c:\testdata.txt");
+            var provider = new SchemaSerializer().ReadFromDisk(@"c:\testdata.txt");
 
             Assert.NotNull(provider);
         }

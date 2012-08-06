@@ -52,10 +52,14 @@ namespace FastSchemaProvider
 
                 CreateMissingIndizes(MissingIndizes);
 
+                IDictionary<Table, IList<Index>> IndizesThatAreToMuch = SearchForIndizesThatAreToMuch();
+
+                DropIndizesThatAreToMuch(IndizesThatAreToMuch);
+
                 IDictionary<Table, IList<ForeignKey>> MissingForeignKeys = SearchForMissingForeignKeys();
 
                 CreateMissingForeignKeys(MissingForeignKeys);
-
+                
                 IEnumerable<Procedure> ProceduresThatAreToMuch = SearchForProceduresToDrop();
 
                 DropProceduresThatAreToMuch(ProceduresThatAreToMuch);
@@ -318,6 +322,8 @@ namespace FastSchemaProvider
                     CreateIndexOrConstraint(missing.Key, missingIndex);
         }
 
+     
+
         private void CreateIndexOrConstraint(Table table, Index missingIndex)
         {
             string CreateStatement = String.Empty;
@@ -369,6 +375,53 @@ namespace FastSchemaProvider
             }
 
             ExecuteCommandOnOldDatabase(CreateStatement);
+        }
+
+        private IDictionary<Table, IList<Index>> SearchForIndizesThatAreToMuch()
+        {
+            IDictionary<Table, IList<Index>> Result = new Dictionary<Table, IList<Index>>();
+
+            foreach (var TableInOldSchema in OldSchema.Tables)
+            {
+                var FoundTableInNewSchema = NewSchema.Tables.Where(NewTable => NewTable.ActualName == TableInOldSchema.ActualName).FirstOrDefault();
+
+                if (FoundTableInNewSchema != null)
+                {
+                    foreach (var OldIndex in TableInOldSchema.Indizes)
+                    {
+                        var FoundIndex = FoundTableInNewSchema.Indizes.Where(NewIndex => NewIndex.IndexName == OldIndex.IndexName).FirstOrDefault();
+
+                        if (FoundIndex == null)
+                        {
+                            if (!Result.Keys.Contains(TableInOldSchema))
+                                Result.Add(TableInOldSchema, new List<Index>());
+
+                            Result[TableInOldSchema].Add(OldIndex);
+                        }
+                    }
+                }
+            }
+
+            return Result;
+
+        }
+
+        private void DropIndizesThatAreToMuch(IDictionary<Table, IList<Index>> indizesThatAreToMuch)
+        {
+            foreach (var ToMuch in indizesThatAreToMuch)
+                foreach (var IndexToMuch in ToMuch.Value)
+                    DropIndexOrConstraint(ToMuch.Key, IndexToMuch);
+        }
+
+        private void DropIndexOrConstraint(Table table, Index missingIndex)
+        {
+            string DropStatement = String.Empty;
+            if (missingIndex.IndexType == IndexTypes.UnqiueConstraint)
+                DropStatement = String.Format("ALTER TABLE [{0}] DROP CONSTRAINT [{1}]", table.ActualName, missingIndex.IndexName);
+            else
+                DropStatement = String.Format("DROP INDEX [{1}]", table.ActualName, missingIndex.IndexName);
+
+            ExecuteCommandOnOldDatabase(DropStatement);
         }
 
         private IDictionary<Table, IList<ForeignKey>> SearchForMissingForeignKeys()

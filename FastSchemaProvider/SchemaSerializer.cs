@@ -5,7 +5,7 @@ using System.IO;
 
 namespace FastSchemaProvider
 {
-    public class FastSchemaSerializer
+    public class SchemaSerializer
     {
         public Stream Serialize(SchemaProvider provider)
         {
